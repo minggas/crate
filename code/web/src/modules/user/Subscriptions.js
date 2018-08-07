@@ -1,9 +1,8 @@
 // Imports
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { Link } from 'react-router-dom'
 
 // UI Imports
 import { Grid, GridCell } from '../../ui/grid'
@@ -17,7 +16,7 @@ import EmptyMessage from '../common/EmptyMessage'
 import SubscriptionItem from '../subscription/Item'
 
 // Component
-class Subscriptions extends Component {
+class Subscriptions extends PureComponent {
 
   // Runs on server only for SSR
   static fetchData({ store }) {
@@ -60,7 +59,7 @@ class Subscriptions extends Component {
                           <SubscriptionItem subscription={subscription} />
                         </div>
                       ))
-                    : <EmptyMessage message="You have not subscribed to any crates yet." />
+                    : <EmptyMessage message="You are not subscribed to any crates yet." />
             }
           </GridCell>
         </Grid>

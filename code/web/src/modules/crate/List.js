@@ -1,9 +1,8 @@
 // Imports
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { Link } from 'react-router-dom'
 
 // UI Imports
 import { Grid, GridCell } from '../../ui/grid'
@@ -13,10 +12,11 @@ import { grey, grey2 } from '../../ui/common/colors'
 // App Imports
 import { getList as getCratesList } from './api/actions'
 import Loading from '../common/Loading'
+import EmptyMessage from '../common/EmptyMessage'
 import CrateItem from './Item'
 
 // Component
-class List extends Component {
+class List extends PureComponent {
 
   // Runs on server only for SSR
   static fetchData({ store }) {
@@ -51,20 +51,14 @@ class List extends Component {
           <GridCell>
             {
               this.props.crates.isLoading
-                ?
-              <Loading/>
-                :
-              (
-                this.props.crates.list.length > 0
-                  ?
-                this.props.crates.list.map(crate => (
-                  <div key={crate.id} style={{ margin: '2em', float: 'left' }}>
-                    <CrateItem crate={crate}/>
-                  </div>
-                ))
-                  :
-                <p>No crates to show.</p>
-              )
+                ? <Loading/>
+                : this.props.crates.list.length > 0
+                    ? this.props.crates.list.map(crate => (
+                      <div key={crate.id} style={{ margin: '2em', float: 'left' }}>
+                        <CrateItem crate={crate}/>
+                      </div>
+                    ))
+                    : <EmptyMessage message="No crates to show" />
             }
           </GridCell>
         </Grid>

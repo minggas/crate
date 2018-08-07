@@ -1,5 +1,5 @@
 // Imports
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
@@ -12,13 +12,13 @@ import Icon from '../../ui/icon'
 import { white, grey2, black } from '../../ui/common/colors'
 
 // App Imports
-import { APP_URL } from '../../setup/configs'
+import { APP_URL } from '../../setup/config/env'
 import userRoutes from '../../setup/routes/user'
 import { messageShow, messageHide } from '../common/api/actions'
 import { create } from '../subscription/api/actions'
 
 // Component
-class Item extends Component {
+class Item extends PureComponent {
 
   constructor(props) {
     super(props)

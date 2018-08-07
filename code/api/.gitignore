@@ -1,4 +1,4 @@
 node_modules/
-package-lock.json
+build/
 public/images/uploads/*
 !public/images/uploads/.gitkeep

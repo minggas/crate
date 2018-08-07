@@ -6,6 +6,9 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 
+// App Imports
+import { NODE_ENV } from '../config/env'
+
 // Load express modules
 export default function (server) {
   console.info('SETUP - Loading modules...')
@@ -24,5 +27,7 @@ export default function (server) {
   server.use(express.static(path.join(__dirname, '..', '..', 'public')))
 
   // HTTP logger
-  server.use(morgan('tiny'))
+  if(NODE_ENV === 'development') {
+    server.use(morgan('tiny'))
+  }
 }

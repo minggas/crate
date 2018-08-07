@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 // App Imports
-import config from '../../config/config'
+import serverConfig from '../../config/server'
 import params from '../../config/params'
 import models from '../../setup/models'
 
@@ -14,7 +14,7 @@ export async function create(parentValue, { name, email, password }) {
 
   if (!user) {
     // User does not exists
-    const passwordHashed = await bcrypt.hash(password, config.saltRounds)
+    const passwordHashed = await bcrypt.hash(password, serverConfig.saltRounds)
 
     return await models.User.create({
       name,
@@ -35,12 +35,6 @@ export async function login(parentValue, { email, password }) {
     throw new Error(`We do not have any user registered with ${ email } email address. Please signup.`)
   } else {
     const userDetails = user.get()
-    const userDetailsToken = {
-      id: userDetails.id,
-      name: userDetails.name,
-      email: userDetails.email,
-      role: userDetails.role
-    }
 
     // User exists
     const passwordMatch = await bcrypt.compare(password, userDetails.password)
@@ -49,9 +43,16 @@ export async function login(parentValue, { email, password }) {
       // Incorrect password
       throw new Error(`Sorry, the password you entered is incorrect. Please try again.`)
     } else {
+      const userDetailsToken = {
+        id: userDetails.id,
+        name: userDetails.name,
+        email: userDetails.email,
+        role: userDetails.role
+      }
+
       return {
         user: userDetails,
-        token: jwt.sign(userDetailsToken, config.secret)
+        token: jwt.sign(userDetailsToken, serverConfig.secret)
       }
     }
   }

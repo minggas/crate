@@ -1,5 +1,5 @@
 // Imports
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
 // UI Imports
 import { Grid, GridCell } from '../../ui/grid'
@@ -10,10 +10,10 @@ import { white } from '../../ui/common/colors'
 import { textLevel1 } from '../../ui/common/shadows'
 
 // App Imports
-import { APP_URL } from '../../setup/configs'
+import { APP_URL } from '../../setup/config/env'
 
 // Component
-class Onboarding extends Component {
+class Onboarding extends PureComponent {
 
   constructor(props) {
     super(props)
